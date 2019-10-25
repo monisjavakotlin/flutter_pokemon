@@ -1,3 +1,26 @@
+class PokeHub {
+  List<Pokemon> pokemon;
+
+  PokeHub({this.pokemon});
+
+  PokeHub.fromJson(Map<String, dynamic> json) {
+    if (json['pokemon'] != null) {
+      pokemon = List<Pokemon>();
+      json['pokemon'].forEach((v) {
+        pokemon.add(Pokemon.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (this.pokemon != null) {
+      data['pokemon'] = this.pokemon.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class Pokemon {
   int id;
   String num;
@@ -51,15 +74,15 @@ class Pokemon {
     multipliers = json['multipliers']?.cast<double>();
     weaknesses = json['weaknesses'].cast<String>();
     if (json['next_evolution'] != null) {
-      nextEvolution = new List<NextEvolution>();
+      nextEvolution = List<NextEvolution>();
       json['next_evolution'].forEach((v) {
-        nextEvolution.add(new NextEvolution.fromJson(v));
+        nextEvolution.add(NextEvolution.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = this.id;
     data['num'] = this.num;
     data['name'] = this.name;
@@ -83,7 +106,6 @@ class Pokemon {
   }
 }
 
-
 class NextEvolution {
   String num;
   String name;
@@ -96,7 +118,7 @@ class NextEvolution {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['num'] = this.num;
     data['name'] = this.name;
     return data;
