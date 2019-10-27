@@ -50,6 +50,53 @@ class _HomePageState extends State<HomePage> {
         title: Text('Pokemon Baby'),
         backgroundColor: Colors.cyan,
       ),
+      body: pokeHub == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : GridView.count(
+              crossAxisCount: 3,
+              children: pokeHub.pokemon
+                  .map((poke) => Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: InkWell(
+                          onTap: () {},
+                          child: Hero(
+                            tag: poke.img,
+                            child: Card(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.1,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.2,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(poke.img))),
+                                    ),
+                                  ),
+                                  Text(
+                                    poke.name,
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ))
+                  .toList(),
+            ),
       drawer: Drawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
