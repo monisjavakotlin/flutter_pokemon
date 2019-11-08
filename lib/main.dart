@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'pokemon.dart';
+import 'pokemondetail.dart';
 
 void main() => runApp(MyApp());
 
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     fetchData();
   }
 
-  fetchData() async {
+  Future<PokeHub> fetchData() async {
     var res = await http.get(url);
     var decodedJson = jsonDecode(res.body);
     pokeHub = PokeHub.fromJson((decodedJson));
@@ -55,12 +56,19 @@ class _HomePageState extends State<HomePage> {
               child: CircularProgressIndicator(),
             )
           : GridView.count(
-              crossAxisCount: 3,
+              crossAxisCount: 2,
               children: pokeHub.pokemon
                   .map((poke) => Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PokeDetail(
+                                          pokemon: poke,
+                                        )));
+                          },
                           child: Hero(
                             tag: poke.img,
                             child: Card(
